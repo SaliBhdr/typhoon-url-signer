@@ -36,6 +36,6 @@ class Hmac extends AbstractSigner
      */
     public function verify(string $mustSign,string $signedBefore): bool
     {
-        return strcmp($this->sign($mustSign),$signedBefore) == 0;
+        return hash_equals($this->sign($mustSign),$signedBefore) == 0;
     }
 }

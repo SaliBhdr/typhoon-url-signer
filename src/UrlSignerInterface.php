@@ -6,7 +6,7 @@
  * Time: 1:56 PM
  */
 
-namespace SaliBhdr\UrlSigner\Signers;
+namespace SaliBhdr\UrlSigner;
 
 
 interface UrlSignerInterface

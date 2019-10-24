@@ -1,6 +1,6 @@
 {
   "name": "salibhdr/typhoon-url-signer",
-  "description": "A Laravel package for creating and validating signed and secure URLs",
+  "description": "Package for creating and validating signed and secure URLs",
   "type": "package",
   "license": "MIT",
   "authors": [

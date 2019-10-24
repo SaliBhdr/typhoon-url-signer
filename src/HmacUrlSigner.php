@@ -10,14 +10,16 @@ namespace SaliBhdr\UrlSigner;
 
 use SaliBhdr\UrlSigner\Signature\Signature;
 
-class Md5UrlSigner implements UrlSignerInterface
+class HmacUrlSigner implements UrlSignerInterface
 {
+
     /** @var UrlSigner $urlSigner */
     protected $urlSigner;
 
-    public function __construct(string $signKey)
+    public function __construct(string $signKey,string $algorithm = 'sha256')
     {
-        $signer    = new Md5($signKey);
+        $signer    = new Hmac($signKey,$algorithm);
+
         $signature = new Signature($signer);
 
         $this->urlSigner = new UrlSigner($signature);
