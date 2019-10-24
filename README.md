@@ -11,6 +11,7 @@
 
 Typhoon Url Signer is a package that signs and validates url's with ease.
 You can make secure url's for your files so that no one can access your files without permission
+
 You can use this package both standalone and with your laravel application 
 
 ## Installation
@@ -72,78 +73,6 @@ php artisan urlSigner:generate
 It will generate the a sign key in `.env` file.
 
 ## Usage
-
-You can use this package both with laravel service provider and stand alone
-
-### Laravel
-
-Example config file :
-
-```php
-<?php
-
-return [
-    'sign_key'  => env('URL_SIGN_KEY', ''),
-    'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
-
-    'signer' => 'md5', // hmac || md5 || rsa
-
-    'hmac' => [
-        'algorithm' => 'sha256'
-    ],
-
-    'rsa' => [
-        'algorithm'      => 'sha256',
-        'signature_mode' => 2,
-        //change public key and private key
-        'public_key'     => '',
-        'private_key'    => ''
-    ]
-];
-```
-**Notice:** Please read Standalone section below for read the details about methods.
-
-You can use `UrlSigner` facade to sign and validate urls.
-
-```php
-<?php
-
-use UrlSigner;
-
-$url = 'www.example.com/api/v1/book?timestamp=153664546&id=2';
-
-$signedUrl = UrlSigner::makeUrl($url);
-
-```
-Or you can pass url and query separately :
-
-```php
-<?php
-use SaliBhdr\UrlSigner\Laravel\Facades\UrlSigner;
-
-$url = 'www.example.com/api/v1/book';
-
-$params = [
-    'timestamp' => '153664546',
-    'id' => 2
-];
-
-$signedUrl = UrlSigner::makeUrl($url,$params);
-
-```
-
-To validate url's :
-
-```php
-<?php
-
-//throws exception
-UrlSigner::validateUrl($signedUrl);
-
-// returns true/false
-echo UrlSigner::isValidUrl($signedUrl) ? 'valid':'notValid';
-
-```
 
 ### Standalone
 
@@ -335,6 +264,76 @@ echo $urlSigner->isValid($signedUrl) ? 'valid' : 'notValid';
 The validateUrl() method will throw one these 2 errors:
 1) SignatureMissingException : if the url has no `sg` parameter in it
 2) SignatureNotValidException : if the `sg` parameter is not a valid one
+
+### Laravel
+
+Example config file :
+
+```php
+<?php
+
+return [
+    'sign_key'  => env('URL_SIGN_KEY', ''),
+    'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
+
+    'signer' => 'md5', // hmac || md5 || rsa
+
+    'hmac' => [
+        'algorithm' => 'sha256'
+    ],
+
+    'rsa' => [
+        'algorithm'      => 'sha256',
+        'signature_mode' => 2,
+        //change public key and private key
+        'public_key'     => '',
+        'private_key'    => ''
+    ]
+];
+```
+**Notice:** Please read Standalone section above for read the details about methods.
+
+You can use `UrlSigner` facade to sign and validate urls.
+
+```php
+<?php
+
+use UrlSigner;
+
+$url = 'www.example.com/api/v1/book?timestamp=153664546&id=2';
+
+$signedUrl = UrlSigner::makeUrl($url);
+
+```
+Or you can pass url and query separately :
+
+```php
+<?php
+use SaliBhdr\UrlSigner\Laravel\Facades\UrlSigner;
+
+$url = 'www.example.com/api/v1/book';
+
+$params = [
+    'timestamp' => '153664546',
+    'id' => 2
+];
+
+$signedUrl = UrlSigner::makeUrl($url,$params);
+
+```
+
+To validate url's :
+
+```php
+<?php
+
+//throws exception
+UrlSigner::validateUrl($signedUrl);
+
+// returns true/false
+echo UrlSigner::isValidUrl($signedUrl) ? 'valid':'notValid';
+
+```
 
 ## Todos
 
