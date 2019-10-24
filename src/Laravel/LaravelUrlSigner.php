@@ -65,6 +65,37 @@ class LaravelUrlSigner
     }
 
     /**
+     * @param $signer
+     *
+     * @return mixed
+     */
+    private function getSignatureMode(string $signer) : string
+    {
+        return $this->config[$signer]['signature_mode'];
+    }
+
+    /**
+     * @param $signer
+     *
+     * @return mixed
+     */
+    private function getPublicKey(string $signer) : string
+    {
+        return $this->config[$signer]['public_key'];
+    }
+
+
+    /**
+     * @param $signer
+     *
+     * @return mixed
+     */
+    private function getPrivateKey(string $signer) : string
+    {
+        return $this->config[$signer]['private_key'];
+    }
+
+    /**
      * @return UrlSignerInterface
      */
     public function getUrlSigner() : UrlSignerInterface
@@ -87,7 +118,9 @@ class LaravelUrlSigner
                 $signerInstance = new Hmac($this->getSignKey(), $this->getAlgorithm($signer));
                 break;
             case 'rsa' :
-                $signerInstance = new Rsa($this->getSignKey(), $this->getAlgorithm($signer));
+                $signerInstance = new Rsa($this->getAlgorithm($signer),$this->getSignatureMode($signer));
+                $signerInstance->setPublicKey($this->getPublicKey($signer));
+                $signerInstance->setPrivateKey($this->getPrivateKey($signer));
                 break;
             default:
                 throw new SignerNotFoundException();

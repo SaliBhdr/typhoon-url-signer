@@ -15,26 +15,58 @@ class Rsa extends AbstractSigner
     /** @var BaseRSA $rsaSigner */
     protected $rsaSigner;
 
+    protected $publicKey;
+
+    protected $privateKey;
     /**
      * RsaSigner constructor.
-     * @param $signKey
      * @param int $signatureMode
      * @param string $signAlgorithm
      */
-    public function __construct($signKey,$signAlgorithm = 'sha256',int $signatureMode = BaseRSA::SIGNATURE_PKCS1)
+    public function __construct($signAlgorithm = 'sha256',int $signatureMode = BaseRSA::SIGNATURE_PKCS1)
     {
-        parent::__construct($signKey);
+        parent::__construct('');
 
-        $rsa = new BaseRSA();
-        $rsa->setHash($signAlgorithm);
-        $rsa->setSignatureMode($signatureMode);
-        $rsa->loadKey($this->signKey);
+        $this->rsaSigner = new BaseRSA();
+        $this->rsaSigner->setHash($signAlgorithm);
+        $this->rsaSigner->setSignatureMode($signatureMode);
+    }
+
+    /**
+     * @return BaseRSA
+     */
+    public function getRsaSigner() : BaseRSA
+    {
+        return $this->rsaSigner;
+    }
+
+    /**
+     * @param $publicKey
+     */
+    public function setPublicKey($publicKey)
+    {
+        $this->publicKey = $publicKey;
+    }
+
+    /**
+     * @param $private_key
+     */
+    public function setPrivateKey($private_key)
+    {
+        $this->privateKey = $private_key;
     }
 
 
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
     public function sign(string $string): string
     {
-        return $this->rsaSigner->sign($string);
+        $this->rsaSigner->loadKey($this->privateKey);
+
+        return base64_encode($this->rsaSigner->sign($string));
     }
 
     /**
@@ -44,6 +76,8 @@ class Rsa extends AbstractSigner
      */
     public function verify(string $mustSign, string $signedBefore): bool
     {
-        return $this->rsaSigner->verify($this->rsaSigner->sign($mustSign), $signedBefore);
+        $this->rsaSigner->loadKey($this->publicKey);
+
+        return $this->rsaSigner->verify($mustSign, base64_decode($signedBefore));
     }
 }

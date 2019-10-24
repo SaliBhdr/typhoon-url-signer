@@ -24,17 +24,6 @@ class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProv
      */
     protected $defer = true;
 
-    /**
-     * Bootstrap the application events.
-     */
-    public function boot()
-    {
-        $this->setupConfig();
-
-        $this->commands([
-            SignerKeyGenerate::class,
-        ]);
-    }
 
     /**
      * Register the service provider.
@@ -42,15 +31,20 @@ class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProv
      */
     public function register()
     {
+        $this->setupConfig();
+
+        $this->commands([
+            SignerKeyGenerate::class,
+        ]);
+
         $urlSigner = new LaravelUrlSigner();
 
-        $this->app->bind(UrlSigner::class, function ($app) use ($urlSigner){
-
+        $this->app->singleton(UrlSigner::class, function ($app) use ($urlSigner){
             return $urlSigner->getUrlSigner();
-
         });
 
         $this->app->alias(UrlSigner::class, 'typhoonUrlSigner');
+
     }
 
     /**
