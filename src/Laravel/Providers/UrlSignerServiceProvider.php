@@ -10,8 +10,10 @@ namespace SaliBhdr\UrlSigner\Laravel\Providers;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use SaliBhdr\UrlSigner\Laravel\Commands\SignerKeyGenerate;
 use SaliBhdr\UrlSigner\Laravel\LaravelUrlSigner;
 use SaliBhdr\UrlSigner\UrlSigner;
+use Laravel\Lumen\Application as LumenApplication;
 
 class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -30,7 +32,7 @@ class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProv
         $this->setupConfig();
 
         $this->commands([
-            WebHookCommand::class,
+            SignerKeyGenerate::class,
         ]);
     }
 
@@ -78,7 +80,11 @@ class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProv
      */
     protected function addConfig()
     {
-        $this->publishes([$this->getConfigFile() => config_path('urlSigner.php')],'typhoonUrlSigner');
+        if($this->app instanceof LumenApplication){
+            $this->app->configure('urlSigner');
+        }else{
+            $this->publishes([$this->getConfigFile() => config_path('urlSigner.php')],'typhoonUrlSigner');
+        }
     }
 
     /**
