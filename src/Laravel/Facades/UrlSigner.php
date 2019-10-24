@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Class UrlSigner
  * @package SaliBhdr\UrlSigner\Laravel\Facades
- * @method string makeUrl(string $url, array $params = [])
- * @method void validateUrl(string $url, array $params = [])
- * @method bool isValidUrl(string $url, array $params = [])
+ * @method static string makeUrl(string $url, array $params = [])
+ * @method static void validateUrl(string $url, array $params = [])
+ * @method static bool isValidUrl(string $url, array $params = [])
  */
 class UrlSigner extends Facade
 {
@@ -24,6 +24,6 @@ class UrlSigner extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'urlSigner';
+        return 'typhoonUrlSigner';
     }
 }

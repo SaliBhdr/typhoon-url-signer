@@ -66,7 +66,7 @@ class SignerKeyGenerate extends Command
      */
     protected function generateRandomKey()
     {
-        return 'base64:' . base64_encode(
+        return base64_encode(
                 Encrypter::generateKey($this->laravel['config']['app.cipher'])
             );
     }
