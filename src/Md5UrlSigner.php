@@ -6,7 +6,7 @@
  * Time: 1:51 PM
  */
 
-namespace SaliBhdr\UrlSigner\Signers;
+namespace SaliBhdr\UrlSigner;
 
 use SaliBhdr\UrlSigner\Signature\Signature;
 
