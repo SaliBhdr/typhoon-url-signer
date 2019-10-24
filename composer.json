@@ -1,0 +1,22 @@
+{
+  "name": "salibhdr/typhoon-url-signer",
+  "description": "A Laravel package for creating and validating signed and secure URLs",
+  "type": "package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Salar Bahador",
+      "email": "bahador.salar@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0.0",
+    "phpseclib/phpseclib": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SaliBhdr\\UrlSigner\\": "src/"
+    }
+  }
+}
