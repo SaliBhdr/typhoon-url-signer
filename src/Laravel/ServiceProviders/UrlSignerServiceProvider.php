@@ -6,7 +6,7 @@
  * Time: 5:22 PM
  */
 
-namespace SaliBhdr\UrlSigner\Laravel\Providers;
+namespace SaliBhdr\UrlSigner\Laravel\ServiceProviders;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;

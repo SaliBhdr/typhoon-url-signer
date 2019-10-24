@@ -9,6 +9,7 @@
 namespace SaliBhdr\UrlSigner;
 
 use SaliBhdr\UrlSigner\Signature\Signature;
+use SaliBhdr\UrlSigner\Signers\Md5;
 
 class Md5UrlSigner implements UrlSignerInterface
 {
