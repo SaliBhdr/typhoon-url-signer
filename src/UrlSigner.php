@@ -30,6 +30,8 @@ class UrlSigner implements UrlSignerInterface
     {
         if (empty($params)) {
             $this->parseUrl($url, $params);
+        }else{
+
         }
 
         return $url.'?'.http_build_query($this->signature->addSignature($url, $params));

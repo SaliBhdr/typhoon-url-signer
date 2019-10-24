@@ -11,7 +11,6 @@ use Throwable;
 
 class SignatureNotValidException extends UrlSignerException
 {
-
     public function __construct(string $message = "The signature is not valid", int $code = 422, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);

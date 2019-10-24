@@ -9,7 +9,7 @@ return [
     'sign_key'  => env('URL_SIGN_KEY', ''),
     'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
 
-    'signer' => 'md5', // Hmac || Md5 || Rsa
+    'signer' => 'md5', // hmac || md5 || rsa
 
     'hmac' => [
         'algorithm' => 'sha256'
