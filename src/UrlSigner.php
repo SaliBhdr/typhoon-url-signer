@@ -26,7 +26,7 @@ class UrlSigner implements UrlSignerInterface
      * @param array $params
      * @return string
      */
-    public function makeUrl(string $url, array $params = []): string
+    public function create(string $url, array $params = []): string
     {
         if (empty($params)) {
             $this->parseUrl($url, $params);
@@ -43,7 +43,7 @@ class UrlSigner implements UrlSignerInterface
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
      */
-    public function validateUrl(string $url, array $params = []): void
+    public function validate(string $url, array $params = []): void
     {
         if (empty($params)) {
             $this->parseUrl($url, $params);
@@ -57,10 +57,10 @@ class UrlSigner implements UrlSignerInterface
      * @param array $params
      * @return bool
      */
-    public function isValidUrl(string $url, array $params = []): bool
+    public function isValid(string $url, array $params = []): bool
     {
         try {
-            $this->validateUrl($url, $params);
+            $this->validate($url, $params);
             $isValid = true;
         } catch (UrlSignerException $e) {
             $isValid = false;
