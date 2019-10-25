@@ -16,10 +16,10 @@ class Md5UrlSigner implements UrlSignerInterface
     /** @var UrlSigner $urlSigner */
     protected $urlSigner;
 
-    public function __construct(string $signKey)
+    public function __construct(string $signKey,$ttl = 7200)
     {
         $signer    = new Md5($signKey);
-        $signature = new Signature($signer);
+        $signature = new Signature($signer,$ttl);
 
         $this->urlSigner = new UrlSigner($signature);
     }

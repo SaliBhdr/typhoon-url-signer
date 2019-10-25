@@ -12,7 +12,16 @@
 Typhoon Url Signer is a package that signs and validates url's with ease.
 You can make secure url's for your files so that no one can access your files without permission
 
-You can use this package both standalone and with your laravel application 
+You can use this package both standalone and with your laravel application
+
+**Features**
+- Create secure url's with expire time
+- Create secure url's without expire time
+- Validate url's 
+- Use both with laravel and standalone
+- Add your own signers with your own logic (md5,hmac,etc.) (standalone mode)
+- Add your own url signer with your own logic (standalone mode)
+- Add your own signature (both laravel and standalone)
 
 ## Installation
 
@@ -25,7 +34,6 @@ You can use this package both standalone and with your laravel application
 ### Standalone
 
 You are ready to use the package and no other configuration needed.
-
 
 ### Laravel and lumen
 
@@ -138,6 +146,10 @@ So keep this in mind in all 3 methods.
 
 Feel free to make your own signer by implementing `UrlSignerInterface`.
 
+The url signer default ttl is 7200 seconds (2 hours). 
+Pass null to ttl so that
+the url's will not expire at all.
+
 ### Standalone
 
 #### With Md5 signer
@@ -151,8 +163,11 @@ use SaliBhdr\UrlSigner\Md5UrlSigner;
 
 //your sign key
 $signKey = 'EKtF4lFP6D1FjBGtSRIk1gGn2YCRmtGPocBWV39wAeM=';
+// default ttl is 7200 seconds
+// pass null to make url's without expire time
+$ttl = 7200; 
 
-$urlSigner = new Md5UrlSigner($signKey);
+$urlSigner = new Md5UrlSigner($signKey,$ttl);
 
 ```
 
@@ -168,8 +183,11 @@ use SaliBhdr\UrlSigner\HmacUrlSigner;
 //your sign key
 $signKey = 'EKtF4lFP6D1FjBGtSRIk1gGn2YCRmtGPocBWV39wAeM=';
 $algorithm = 'sha1';
+// default ttl is 7200 seconds
+// pass null to make url's without expire time
+$ttl = 7200; 
 
-$urlSigner = new HmacUrlSigner($signKey,$algorithm);
+$urlSigner = new HmacUrlSigner($signKey,$algorithm,$ttl);
 
 ```
 The HmacUrlSigner gets algorithm through second parameter. 
@@ -245,7 +263,11 @@ Second make a **signature** and path the signer:
 
 use SaliBhdr\UrlSigner\Signature\Signature;
 
-$signature = new Signature($signer);
+// default ttl is 7200 seconds
+// pass null to make url's without expire time
+$ttl = 7200; 
+
+$signature = new Signature($signer,$ttl);
 
 ```
 **Third and final step make UrlSigner** and path the signature:
@@ -298,6 +320,10 @@ The validate() method will throw one these 2 errors:
 ---
 
 **Notice:** Please read Standalone section above for read the details about methods.
+
+The url signer default ttl is 7200 seconds (2 hours). 
+Set null to ttl in config so that
+the url's will not expire at all.
 
 You can use `UrlSigner` facade to sign and validate urls.
 

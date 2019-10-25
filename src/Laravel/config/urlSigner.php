@@ -8,8 +8,10 @@
 return [
     'sign_key'  => env('URL_SIGN_KEY', ''),
     'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
-
-    'signer' => 'md5', // hmac || md5 || rsa
+    // ttl in seconds - default is 2 hours
+    // set ttl to null if you don't want your links to expire
+    'ttl'       => 7200,
+    'signer'    => 'md5', // hmac || md5 || rsa
 
     'hmac' => [
         'algorithm' => 'sha256'
