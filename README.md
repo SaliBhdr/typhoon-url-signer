@@ -284,7 +284,7 @@ $signature = new UrlSigner($signature);
 
 **Now you can use the url signer:**
 
-Making signed url:
+Creating signed url:
 
 ```php
 <?php
@@ -312,8 +312,13 @@ echo $urlSigner->isValid($signedUrl) ? 'valid' : 'notValid';
 
 ```
 The validate() method will throw one these 2 errors:
-1) SignatureMissingException : if the url has no `sg` parameter in it
-2) SignatureNotValidException : if the `sg` parameter is not a valid one
+1) SignatureMissingException : If the url has no `sg` parameter in it
+2) SignatureNotValidException : If the `sg` parameter is not a valid one
+3) SignatureTimestampMissingException : If the url has no `ts` parameter in it
+4) SignatureUrlExpiredException : If the link is expired
+
+**Note 1:** If you want to handle exceptions, All exceptions are extended from `UrlSignerException` 
+**Note 2:** The Url expiration and missing timestamp exception are throw when you define a ttl (time to live)
 
 ### Laravel
 
@@ -370,8 +375,7 @@ echo UrlSigner::isValid($signedUrl) ? 'valid':'notValid';
 ## Todos
 
  - Write Tests
- - Add timestamp to url
-
+ 
 Issues
 ----
 You can report issues in github repository [here][lk1] 
