@@ -105,11 +105,11 @@ You have 3 options to sign urls:
 All of 3 signers above has implemented form `SaliBhdr\UrlSigner\UrlSignerInterface`
 and has 3 methods:
 
-1) makeUrl($url,$params) : makes signed url base on input
-2) validateUrl($url,$params) : validates signed url throws exception base on input
-3) isValidUrl($url,$params) : validates and return true/false instead of exception
+1) create($url,$params) : makes signed url base on input
+2) validate($url,$params) : validates signed url throws exception base on input
+3) isValid($url,$params) : validates and return true/false instead of exception
 
-All 3 methods makeUrl method take 2 parameters as input.The $url parameter and $params.
+All 3 methods sign method take 2 parameters as input.The $url parameter and $params.
 you can pass only url with query string attach to it:
 
 ```php
@@ -117,7 +117,7 @@ you can pass only url with query string attach to it:
 $url = 'www.example.com/api/v1/book?timestamp=153664546&id=2';
 
 
-$signedUrl = $urlSigner->makeUrl($url);
+$signedUrl = $urlSigner->create($url);
 
 ```
 Or you can pass url and query separately :
@@ -130,7 +130,7 @@ $params = [
     'id' => 2
 ];
 
-$signedUrl = $urlSigner->makeUrl($url,$params);
+$signedUrl = $urlSigner->create($url,$params);
 
 ```
 
@@ -274,7 +274,7 @@ $params = [
     'id' => 2
 ];
 
-$signedUrl = $urlSigner->makeUrl($url,$params);
+$signedUrl = $urlSigner->create($url,$params);
 
 ```
 
@@ -283,13 +283,13 @@ Validate signed url:
 <?php
 
 // throws exception
-$urlSigner->validateUrl($signedUrl);
+$urlSigner->validate($signedUrl);
 
 // returns true/false
 echo $urlSigner->isValid($signedUrl) ? 'valid' : 'notValid';
 
 ```
-The validateUrl() method will throw one these 2 errors:
+The validate() method will throw one these 2 errors:
 1) SignatureMissingException : if the url has no `sg` parameter in it
 2) SignatureNotValidException : if the `sg` parameter is not a valid one
 
@@ -308,7 +308,7 @@ use UrlSigner;
 
 $url = 'www.example.com/api/v1/book?timestamp=153664546&id=2';
 
-$signedUrl = UrlSigner::makeUrl($url);
+$signedUrl = UrlSigner::create($url);
 
 ```
 Or you can pass url and query separately :
@@ -324,7 +324,7 @@ $params = [
     'id' => 2
 ];
 
-$signedUrl = UrlSigner::makeUrl($url,$params);
+$signedUrl = UrlSigner::create($url,$params);
 
 ```
 
@@ -334,10 +334,10 @@ To validate url's :
 <?php
 
 //throws exception
-UrlSigner::validateUrl($signedUrl);
+UrlSigner::validate($signedUrl);
 
 // returns true/false
-echo UrlSigner::isValidUrl($signedUrl) ? 'valid':'notValid';
+echo UrlSigner::isValid($signedUrl) ? 'valid':'notValid';
 
 ```
 

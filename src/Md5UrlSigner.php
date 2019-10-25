@@ -29,9 +29,9 @@ class Md5UrlSigner implements UrlSignerInterface
      * @param array $params
      * @return string
      */
-    public function makeUrl(string $url, array $params = []): string
+    public function create(string $url, array $params = []): string
     {
-        return $this->urlSigner->makeUrl($url, $params);
+        return $this->urlSigner->create($url, $params);
     }
 
     /**
@@ -40,9 +40,9 @@ class Md5UrlSigner implements UrlSignerInterface
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
      */
-    public function validateUrl(string $url, array $params = []): void
+    public function validate(string $url, array $params = []): void
     {
-        $this->urlSigner->validateUrl($url, $params);
+        $this->urlSigner->validate($url, $params);
     }
 
     /**
@@ -50,9 +50,9 @@ class Md5UrlSigner implements UrlSignerInterface
      * @param array $params
      * @return bool
      */
-    public function isValidUrl(string $url, array $params = []): bool
+    public function isValid(string $url, array $params = []): bool
     {
-        return $this->urlSigner->isValidUrl($url, $params);
+        return $this->urlSigner->isValid($url, $params);
     }
 
 }

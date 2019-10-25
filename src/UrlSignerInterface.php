@@ -16,7 +16,7 @@ interface UrlSignerInterface
      * @param array $params
      * @return string
      */
-    public function makeUrl(string $url, array $params): string;
+    public function create(string $url, array $params): string;
 
     /**
      * @param string $url
@@ -24,12 +24,12 @@ interface UrlSignerInterface
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
      */
-    public function validateUrl(string $url, array $params): void;
+    public function validate(string $url, array $params): void;
 
     /**
      * @param string $url
      * @param array $params
      * @return bool
      */
-    public function isValidUrl(string $url, array $params): bool;
+    public function isValid(string $url, array $params): bool;
 }
