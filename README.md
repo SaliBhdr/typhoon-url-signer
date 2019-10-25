@@ -44,7 +44,7 @@ in your config/app.php configuration file:
      SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider::class,
 ],
 ```
-Rub `vendor:publish` command:
+Run `vendor:publish` command:
 
 ```sh
 php artisan vendor:publish --provider="SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider"
