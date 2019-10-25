@@ -96,6 +96,16 @@ class LaravelUrlSigner
     }
 
     /**
+     * @param int
+     *
+     * @return mixed
+     */
+    private function getTtl() : ?int
+    {
+        return $this->config['ttl'];
+    }
+
+    /**
      * @return UrlSignerInterface
      */
     public function getUrlSigner() : UrlSignerInterface
@@ -126,7 +136,9 @@ class LaravelUrlSigner
                 throw new SignerNotFoundException();
         }
 
-        $signature = new $this->config['signature']($signerInstance);
+        $signatureClass = $this->config['signature'];
+
+        $signature = new $signatureClass($signerInstance,$this->getTtl());
 
         $this->urlSigner = new UrlSigner($signature);
     }

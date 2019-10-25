@@ -7,8 +7,18 @@
  */
 namespace SaliBhdr\UrlSigner\Signature;
 
+use SaliBhdr\UrlSigner\Signers\SignerInterface;
+
 interface SignatureInterface
 {
+    /**
+     * SignatureInterface constructor.
+     *
+     * @param SignerInterface $signer
+     * @param int|null $ttl
+     */
+    public function __construct(SignerInterface $signer, ?int $ttl = null);
+
     /**
      * Add an HTTP signature to manipulation params.
      * @param  string $path   The resource path.

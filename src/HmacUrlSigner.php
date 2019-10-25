@@ -17,11 +17,11 @@ class HmacUrlSigner implements UrlSignerInterface
     /** @var UrlSigner $urlSigner */
     protected $urlSigner;
 
-    public function __construct(string $signKey,string $algorithm = 'sha256')
+    public function __construct(string $signKey,string $algorithm = 'sha256',$ttl = 7200)
     {
         $signer    = new Hmac($signKey,$algorithm);
 
-        $signature = new Signature($signer);
+        $signature = new Signature($signer,$ttl);
 
         $this->urlSigner = new UrlSigner($signature);
     }

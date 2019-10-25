@@ -10,11 +10,14 @@ namespace SaliBhdr\UrlSigner\Signature;
 
 use SaliBhdr\UrlSigner\Exceptions\SignatureMissingException;
 use SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException;
+use SaliBhdr\UrlSigner\Exceptions\SignatureTimestampMissingException;
+use SaliBhdr\UrlSigner\Exceptions\SignatureUrlExpiredException;
 use SaliBhdr\UrlSigner\Signers\SignerInterface;
 
 class Signature implements SignatureInterface
 {
     protected const SIGNATURE_KEY_NAME = 'sg';
+    protected const SIGNATURE_TIMESTAMP_KEY = 'ts';
 
     /**
      * Secret key used to generate signature.
@@ -23,18 +26,29 @@ class Signature implements SignatureInterface
     protected $signer;
 
     /**
-     * Create Signature instance.
-     * @param SignerInterface $signer
+     * time to live in seconds
+     * @var int
      */
-    public function __construct(SignerInterface $signer)
+    protected $ttl;
+
+    /**
+     * SignatureInterface constructor.
+     *
+     * @param SignerInterface $signer
+     * @param int|null $ttl
+     */
+    public function __construct(SignerInterface $signer, ?int $ttl = null)
     {
         $this->signer = $signer;
+        $this->ttl = $ttl;
     }
 
     /**
      * Generate an HTTP signature.
+     *
      * @param string $path The resource path.
      * @param array $params The manipulation parameters.
+     *
      * @return string The generated HTTP signature.
      */
     protected function generateSignature(String $path, array $params)
@@ -49,6 +63,7 @@ class Signature implements SignatureInterface
      *
      * @param String $path
      * @param array $params
+     *
      * @return string
      */
     protected function getSingableString(String $path, array $params)
@@ -62,32 +77,53 @@ class Signature implements SignatureInterface
 
     /**
      * Add an HTTP signature to manipulation parameters.
+     *
      * @param  string $path The resource path.
      * @param  array $params The manipulation parameters.
+     *
      * @return array  The updated manipulation parameters.
      */
     public function addSignature($path, array $params)
     {
+        if (!is_null($this->ttl))
+            $params[static::SIGNATURE_TIMESTAMP_KEY] = time() + $this->ttl;
+
         return array_merge($params, [static::SIGNATURE_KEY_NAME => $this->generateSignature($path, $params)]);
     }
 
     /**
      * Validate a request signature.
+     *
      * @param  string $path The resource path.
      * @param  array $params The manipulation params.
+     *
      * @throws SignatureMissingException
      * @throws SignatureNotValidException
+     * @throws SignatureTimestampMissingException
+     * @throws SignatureUrlExpiredException
      */
     public function validate($path, array $params)
     {
         $hash = $params[static::SIGNATURE_KEY_NAME] ?? null;
 
-        if (!isset($hash)) {
+        if (!isset($hash))
             throw new SignatureMissingException();
+
+
+        if (!$this->signer->verify($this->getSingableString($path, $params), $hash))
+            throw new SignatureNotValidException();
+
+
+        if(isset($this->ttl)){
+            $timestamp = $params[static::SIGNATURE_TIMESTAMP_KEY] ?? null;
+
+            if (!isset($timestamp))
+                throw new SignatureTimestampMissingException();
+
+
+            if (time() > $timestamp)
+                throw new SignatureUrlExpiredException();
         }
 
-        if (!$this->signer->verify($this->getSingableString($path,$params),$hash)) {
-            throw new SignatureNotValidException();
-        }
     }
 }
