@@ -29,11 +29,12 @@ You are ready to use the package and no other configuration needed.
 
 ### Laravel and lumen
 
-After installing the Typhoon Url Signer, 
-register the SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider::class 
+##### Laravel
+
+Register the `UrlSignerServiceProvider`
 in your config/app.php configuration file:
 
-##### Only Laravel
+---
 
 ```php
 'providers' => [
@@ -43,23 +44,15 @@ in your config/app.php configuration file:
      SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider::class,
 ],
 ```
+Rub `vendor:publish` command:
+
 ```sh
 php artisan vendor:publish --provider="SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider"
 ```
 It will generate the `urlSigner.php` under config directory.
 
-##### Lumen
-
-----
-
-Register The Service Provider In bootstrap/app.php:
-```php
-$app->register(SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider::class);
-```
-
-Copy the package config file to config directory (you may need to create one):
-
 Copy `URL_SIGN_KEY` to your env:
+
 ```sh
 
 URL_SIGN_KEY=
@@ -72,13 +65,40 @@ php artisan urlSigner:generate
 ```
 It will generate the a sign key in `.env` file.
 
+##### Lumen
+
+----
+
+Register The the `UrlSignerServiceProvider` In bootstrap/app.php:
+
+```php
+$app->register(SaliBhdr\UrlSigner\Laravel\ServiceProviders\UrlSignerServiceProvider::class);
+```
+
+Copy the package config file to config directory (you may need to create one):
+
+Copy `URL_SIGN_KEY` to your env:
+
+```sh
+
+URL_SIGN_KEY=
+
+```
+Run the `urlSigner:generate` command to generate a signKey:
+
+```sh
+php artisan urlSigner:generate
+
+```
+It will generate the a sign key in `.env` file.
+
 ## Usage
 
-### Standalone
+### General Description
 
 You have 3 options to sign urls:
 
-1) With default Md5 signer
+1) With Md5 signer
 2) With Hmac signer
 3) With base signer
 
@@ -89,8 +109,9 @@ and has 3 methods:
 2) validateUrl($url,$params) : validates signed url throws exception base on input
 3) isValidUrl($url,$params) : validates and return true/false instead of exception
 
-All 3 methods makeUrl method take 2 parameters as input.$url and $params.
-you can pass only url like with query string attach to it:
+All 3 methods makeUrl method take 2 parameters as input.The $url parameter and $params.
+you can pass only url with query string attach to it:
+
 ```php
 <?php
 $url = 'www.example.com/api/v1/book?timestamp=153664546&id=2';
@@ -117,6 +138,8 @@ So keep this in mind in all 3 methods.
 
 Feel free to make your own signer by implementing `UrlSignerInterface`.
 
+### Standalone
+
 #### With Md5 signer
 
 Make instance of `Md5UrlSigner`:
@@ -134,6 +157,7 @@ $urlSigner = new Md5UrlSigner($signKey);
 ```
 
 #### With HmacUrlSigner signer
+
 Make instance of `HmacUrlSigner`:
 
 ```php
@@ -154,6 +178,7 @@ parameter if you want to pass another algorithm other than `sha256`.
 You can see list of all available algorithms [here][algorithms]
 
 #### With base UrlSigner signer
+
 The url signer ecosystem is working based on 3 main class:
 
 1) the signer : is the hash method class
@@ -165,7 +190,7 @@ This way you are free to use any signer and signature to make urls as long
 as implement `SignerInterface` for the signer and `SignatureInterface` for the
 signature.
 
-**First make a signer.** 
+First make a **signer** 
 
 You can use one of 3 signers built in this package.
 1) SaliBhdr\UrlSigner\Signers\Md5
@@ -213,7 +238,8 @@ U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
 
 ```
 
-**Second make a signature.** and path the signer:
+Second make a **signature** and path the signer:
+
 ```php
 <?php
 
@@ -232,7 +258,9 @@ $signature = new UrlSigner($signature);
 
 ```
 
-Now you can use the url signer:
+---
+
+**Now you can use the url signer:**
 
 Making signed url:
 
@@ -267,30 +295,8 @@ The validateUrl() method will throw one these 2 errors:
 
 ### Laravel
 
-Example config file :
+---
 
-```php
-<?php
-
-return [
-    'sign_key'  => env('URL_SIGN_KEY', ''),
-    'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
-
-    'signer' => 'md5', // hmac || md5 || rsa
-
-    'hmac' => [
-        'algorithm' => 'sha256'
-    ],
-
-    'rsa' => [
-        'algorithm'      => 'sha256',
-        'signature_mode' => 2,
-        //change public key and private key
-        'public_key'     => '',
-        'private_key'    => ''
-    ]
-];
-```
 **Notice:** Please read Standalone section above for read the details about methods.
 
 You can use `UrlSigner` facade to sign and validate urls.
