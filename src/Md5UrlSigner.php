@@ -37,8 +37,11 @@ class Md5UrlSigner implements UrlSignerInterface
     /**
      * @param string $url
      * @param array $params
-     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
-     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
+     *
+     * @throws Exceptions\SignatureMissingException
+     * @throws Exceptions\SignatureNotValidException
+     * @throws Exceptions\SignatureTimestampMissingException
+     * @throws Exceptions\SignatureUrlExpiredException
      */
     public function validate(string $url, array $params = []): void
     {

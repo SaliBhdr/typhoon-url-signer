@@ -42,6 +42,8 @@ class UrlSigner implements UrlSignerInterface
      *
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
+     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureTimestampMissingException
+     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureUrlExpiredException
      */
     public function validate(string $url, array $params = []) : void
     {
