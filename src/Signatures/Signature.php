@@ -16,8 +16,8 @@ use SaliBhdr\UrlSigner\Signers\SignerInterface;
 
 class Signature implements SignatureInterface
 {
-    protected const SIGNATURE_KEY_NAME = 'sg';
-    protected const SIGNATURE_TIMESTAMP_KEY = 'ts';
+    public const SIGNATURE_KEY_NAME = 'sg';
+    public const SIGNATURE_TIMESTAMP_KEY = 'ts';
 
     /**
      * Secret key used to generate signature.
