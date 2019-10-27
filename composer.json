@@ -18,5 +18,5 @@
       "SaliBhdr\\UrlSigner\\": "src/"
     }
   },
-  "minimum-stability": "~1.2.2"
+  "minimum-stability": "1.2.*"
 }
