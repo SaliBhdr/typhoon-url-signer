@@ -9,19 +9,20 @@
 
 ## Introduction
 
-Typhoon Url Signer is a package that signs and validates url's with ease.
-You can make secure url's for your files so that no one can access your files without permission
+Typhoon Url Signer is a package that signs and validates URLs with ease.
+You can make secure URLs for your files and any kind of URLs that you want so that no one can access them without permission.
+You can make URLs with a limited lifetime to make them expire.
 
-You can use this package both standalone and with your laravel application
+You can use this package both standalone and with your Laravel application
 
 **Features**
-- Create secure url's with expire time
-- Create secure url's without expire time
-- Validate url's 
-- Use both with laravel and standalone
-- Add your own signers with your own logic (md5,hmac,etc.) (standalone mode)
-- Add your own url signer with your own logic (standalone mode)
-- Add your own signature (both laravel and standalone)
+- Create secure URLs with expire time
+- Create secure URLs without expire time
+- Validate URLs 
+- Use both with Laravel and standalone
+- Add your signers with your logic (md5, Hmac, etc.) (standalone mode)
+- Add your URL signer with your logic (standalone mode)
+- Add your signature (both Laravel and standalone)
 
 ## Installation
 
