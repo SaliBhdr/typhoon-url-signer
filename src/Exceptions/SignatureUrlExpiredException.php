@@ -11,7 +11,7 @@ use Throwable;
 
 class SignatureUrlExpiredException extends UrlSignerException
 {
-    public function __construct(string $message = "The url is expired", int $code = 422, Throwable $previous = null)
+    public function __construct(string $message = "The url is expired", int $code = 410, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
