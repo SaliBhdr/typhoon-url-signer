@@ -33,6 +33,8 @@ interface SignatureInterface
      * @param  array              $params The manipulation params.
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
+     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureTimestampMissingException
+     * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureUrlExpiredException
      */
     public function validate($path, array $params);
 }
