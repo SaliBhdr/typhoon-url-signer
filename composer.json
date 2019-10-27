@@ -9,7 +9,6 @@
       "email": "bahador.salar@gmail.com"
     }
   ],
-  "minimum-stability": "~1.2.0",
   "require": {
     "php": ">=7.0.0",
     "phpseclib/phpseclib": "~2.0"
@@ -18,5 +17,7 @@
     "psr-4": {
       "SaliBhdr\\UrlSigner\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "~1.2.2",
+  "prefer-stable": true
 }
