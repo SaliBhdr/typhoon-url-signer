@@ -8,23 +8,14 @@
 
 namespace SaliBhdr\UrlSigner\Laravel\ServiceProviders;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use SaliBhdr\UrlSigner\Laravel\Commands\SignerKeyGenerate;
 use SaliBhdr\UrlSigner\Laravel\LaravelUrlSigner;
 use SaliBhdr\UrlSigner\UrlSigner;
 use Laravel\Lumen\Application as LumenApplication;
 
-class UrlSignerServiceProvider extends ServiceProvider implements DeferrableProvider
+class UrlSignerServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-
     /**
      * Register the service provider.
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignerNotFoundException
