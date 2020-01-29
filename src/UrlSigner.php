@@ -83,7 +83,7 @@ class UrlSigner implements UrlSignerInterface
 
         parse_str($parsedUrl['query'] ?? '', $params);
 
-        $this->clearUrl($url, $parsedUrl['query']);
+        $this->clearUrl($url, $parsedUrl['query'] ?? '');
     }
 
     /**
