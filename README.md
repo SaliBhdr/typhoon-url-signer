@@ -222,38 +222,30 @@ use SaliBhdr\UrlSigner\Signers\Md5;
 use SaliBhdr\UrlSigner\Signers\Hmac;
 use SaliBhdr\UrlSigner\Signers\Rsa;
 use phpseclib\Crypt\RSA as BaseRSA;
+
+//-------------Md5 signer example-------------
 //your sign key
 $signKey = 'EKtF4lFP6D1FjBGtSRIk1gGn2YCRmtGPocBWV39wAeM=';
 
 $signer = new Md5($signKey);
+
+//-------------Hmac signer example------------
+
 $signer = new Hmac($signKey);
 
-// Rsa needs 2 extra parameters
-// a public_key and a private_key
-// It will not work if you don't provide these two
+//-------------Rsa signer example-------------
+
+/* Rsa needs 2 extra parameters
+ * a public_key and a private_key
+ * It will not work if you don't provide these two
+ */
 $algorithm = 'sha1'; // default is sha256
 $signMode = BaseRSA::SIGNATURE_PKCS1;
 
 $signer = new Rsa($algorithm,$signMode);
 
-$signer->setPublicKey('----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
-FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
-3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQAB
------END PUBLIC KEY-----');
-$signer->setPrivateKey('-----BEGIN RSA PRIVATE KEY-----
-MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp
-wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5
-1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh
-3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2
-pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX
-GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il
-AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF
-L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k
-X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl
-U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ
-37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=
------END RSA PRIVATE KEY-----');
+$signer->setPublicKey('----RSA PUBLIC KEY HERE----');
+$signer->setPrivateKey('----RSA PRIVATE KEY HERE----');
 
 ```
 
@@ -277,7 +269,7 @@ $signature = new Signature($signer,$ttl);
 
 use SaliBhdr\UrlSigner\UrlSigner;
 
-$signature = new UrlSigner($signature);
+$urlSigner = new UrlSigner($signature);
 
 ```
 
@@ -356,7 +348,7 @@ $params = [
     'id' => 2
 ];
 
-$signedUrl = UrlSigner::create($url,$params);
+$signedUrl = UrlSigner::create($url, $params);
 
 ```
 
