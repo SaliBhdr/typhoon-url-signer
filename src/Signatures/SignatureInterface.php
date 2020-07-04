@@ -5,7 +5,7 @@
  * Date: 1/26/2019
  * Time: 11:24 PM
  */
-namespace SaliBhdr\UrlSigner\Signature;
+namespace SaliBhdr\UrlSigner\Signatures;
 
 use SaliBhdr\UrlSigner\Signers\SignerInterface;
 
@@ -21,20 +21,20 @@ interface SignatureInterface
 
     /**
      * Add an HTTP signature to manipulation params.
-     * @param  string $path   The resource path.
+     * @param  string $url   The resource path.
      * @param  array  $params The manipulation params.
      * @return array  The updated manipulation params.
      */
-    public function addSignature($path, array $params);
+    public function addSignature($url, array $params);
 
     /**
      * Validate a request signature.
-     * @param  string             $path   The resource path.
+     * @param  string             $url   The resource path.
      * @param  array              $params The manipulation params.
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureTimestampMissingException
      * @throws \SaliBhdr\UrlSigner\Exceptions\SignatureUrlExpiredException
      */
-    public function validate($path, array $params);
+    public function validate($url, array $params);
 }

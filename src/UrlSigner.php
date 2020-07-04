@@ -9,7 +9,7 @@
 namespace SaliBhdr\UrlSigner;
 
 use SaliBhdr\UrlSigner\Exceptions\UrlSignerException;
-use SaliBhdr\UrlSigner\Signature\SignatureInterface;
+use SaliBhdr\UrlSigner\Signatures\SignatureInterface;
 
 class UrlSigner implements UrlSignerInterface
 {

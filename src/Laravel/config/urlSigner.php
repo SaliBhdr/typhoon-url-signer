@@ -7,7 +7,7 @@
  */
 return [
     'sign_key'  => env('URL_SIGN_KEY', ''),
-    'signature' => 'SaliBhdr\UrlSigner\Signature\Signature',
+    'signature' => 'SaliBhdr\UrlSigner\Signatures\Signature',
     // ttl in seconds - default is 2 hours
     // set ttl to null if you don't want your links to expire
     'ttl'       => 7200,
