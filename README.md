@@ -254,7 +254,7 @@ Second make a **signature** and path the signer:
 ```php
 <?php
 
-use SaliBhdr\UrlSigner\Signature\Signature;
+use SaliBhdr\UrlSigner\Signatures\Signature;
 
 // default ttl is 7200 seconds
 // pass null to make url's without expire time

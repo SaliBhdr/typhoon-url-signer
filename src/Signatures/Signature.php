@@ -6,7 +6,7 @@
  * Time: 11:24 PM
  */
 
-namespace SaliBhdr\UrlSigner\Signature;
+namespace SaliBhdr\UrlSigner\Signatures;
 
 use SaliBhdr\UrlSigner\Exceptions\SignatureMissingException;
 use SaliBhdr\UrlSigner\Exceptions\SignatureNotValidException;
@@ -46,55 +46,55 @@ class Signature implements SignatureInterface
     /**
      * Generate an HTTP signature.
      *
-     * @param string $path The resource path.
+     * @param string $url The resource path.
      * @param array $params The manipulation parameters.
      *
      * @return string The generated HTTP signature.
      */
-    protected function generateSignature(String $path, array $params)
+    protected function generateSignature(String $url, array $params)
     {
-        $path = $this->getSingableString($path, $params);
+        $url = $this->getSingableString($url, $params);
 
-        return $this->signer->sign($path);
+        return $this->signer->sign($url);
     }
 
     /**
      * get Singable string
      *
-     * @param String $path
+     * @param String $url
      * @param array $params
      *
      * @return string
      */
-    protected function getSingableString(String $path, array $params)
+    protected function getSingableString(String $url, array $params)
     {
         unset($params[static::SIGNATURE_KEY_NAME]);
 
         ksort($params);
 
-        return ltrim($path, '/') . '?' . http_build_query($params);
+        return ltrim($url, '/') . '?' . http_build_query($params);
     }
 
     /**
      * Add an HTTP signature to manipulation parameters.
      *
-     * @param  string $path The resource path.
+     * @param  string $url The resource path.
      * @param  array $params The manipulation parameters.
      *
      * @return array  The updated manipulation parameters.
      */
-    public function addSignature($path, array $params)
+    public function addSignature($url, array $params)
     {
         if (!is_null($this->ttl))
             $params[static::SIGNATURE_TIMESTAMP_KEY] = time() + $this->ttl;
 
-        return array_merge($params, [static::SIGNATURE_KEY_NAME => $this->generateSignature($path, $params)]);
+        return array_merge($params, [static::SIGNATURE_KEY_NAME => $this->generateSignature($url, $params)]);
     }
 
     /**
      * Validate a request signature.
      *
-     * @param  string $path The resource path.
+     * @param  string $url The resource path.
      * @param  array $params The manipulation params.
      *
      * @throws SignatureMissingException
@@ -102,7 +102,7 @@ class Signature implements SignatureInterface
      * @throws SignatureTimestampMissingException
      * @throws SignatureUrlExpiredException
      */
-    public function validate($path, array $params)
+    public function validate($url, array $params)
     {
         $hash = $params[static::SIGNATURE_KEY_NAME] ?? null;
 
@@ -110,7 +110,7 @@ class Signature implements SignatureInterface
             throw new SignatureMissingException();
 
 
-        if (!$this->signer->verify($this->getSingableString($path, $params), $hash))
+        if (!$this->signer->verify($this->getSingableString($url, $params), $hash))
             throw new SignatureNotValidException();
 
 

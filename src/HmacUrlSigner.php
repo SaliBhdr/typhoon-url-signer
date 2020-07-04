@@ -8,7 +8,7 @@
 
 namespace SaliBhdr\UrlSigner;
 
-use SaliBhdr\UrlSigner\Signature\Signature;
+use SaliBhdr\UrlSigner\Signatures\Signature;
 use SaliBhdr\UrlSigner\Signers\Hmac;
 
 class HmacUrlSigner implements UrlSignerInterface
